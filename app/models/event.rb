@@ -22,6 +22,15 @@ class Event < ApplicationRecord
 
   # 🚅 add delegations above.
 
+  def set_default_times
+    start_time = Time.current.adjust_to_nearest_half_hour
+    
+    self.start_time ||= start_time
+
+    # TODO extract 30 minutes as a parameter for the user
+    self.end_time ||= start_time + 30.minutes
+  end
+
   private
 
   def end_time_after_start_time

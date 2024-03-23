@@ -40,7 +40,7 @@
 <%#= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
 <!--  </div>-->
 <%# end %>
-<%= form_with(model: event, class: "max-w-xl mx-auto my-8 p-6 bg-white shadow rounded") do |form| %>
+<%= form_with(model: event, class: "max-w-xl mx-auto my-8 p-6 bg-white shadow rounded", data: { controller: "datetime-picker" }) do |form| %>
   <% if event.errors.any? %>
     <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
       <strong class="font-bold">Please review the following:</strong>
@@ -60,11 +60,13 @@
   <div class="flex gap-4 my-4">
     <div class="w-1/2">
       <%= form.label :start_time, class: "block text-gray-700 font-bold mb-2" %>
-      <%= form.datetime_field :start_time, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", step: 1800 %>
+      <%= form.datetime_field :start_time, id: 'start_datetime', data: { datetime_picker_target: "start", action: "datetime-picker#updateEndDatetime" },
+                              class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                              step: 1800 %>
     </div>
     <div class="w-1/2">
       <%= form.label :end_time, class: "block text-gray-700 font-bold mb-2" %>
-      <%= form.datetime_field :end_time, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", step: 1800 %>
+      <%= form.datetime_field :end_time, id: 'end_datetime', data: { datetime_picker_target: "end" }, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", step: 1800 %>
     </div>
   </div>
 
