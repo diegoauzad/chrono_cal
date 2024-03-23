@@ -1,0 +1,71 @@
+<!--<div class="w-full">-->
+<%# if notice.present? %>
+<!--    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%#= notice %></p>-->
+<%# end %>
+
+<!-- app/views/events/index.html.erb -->
+
+<% previous_month = @date.prev_month %>
+<% next_month = @date.next_month %>
+
+<% start_of_month = @date.beginning_of_month %>
+<% end_of_month = @date.end_of_month %>
+<% start_day_of_week = start_of_month.wday %>
+<% day_names = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday] %>
+
+<%= turbo_frame_tag 'calendar' do %>
+
+  <!-- Month Header with Navigation -->
+  <div id="calendar_header" class="flex items-center justify-center my-8 space-x-4 gap-4">
+    <%= link_to previous_month.strftime("%B"), events_path(month: previous_month.month, year: previous_month.year), class: "text-blue-500 hover:bg-blue-100 font-bold py-2 px-4 rounded transition duration-150 ease-in-out", data: { turbo_frame: "calendar" } %>
+    <h2 class="text-4xl font-bold mx-12"><%= @date.strftime("%B %Y") %></h2>
+    <%= link_to next_month.strftime("%B"), events_path(month: next_month.month, year: next_month.year), class: "text-blue-500 hover:bg-blue-100 font-bold py-2 px-4 rounded transition duration-150 ease-in-out", data: { turbo_frame: "calendar" } %>
+  </div>
+
+
+  <!-- Day Names -->
+  <div class="grid grid-cols-1 sm:grid-cols-7 gap-4 text-xs sm:text-sm md:text-base">
+    <% day_names.each do |day_name| %>
+      <div class="text-center font-bold">
+        <span class="sm:hidden"><%= day_name.first(3) %></span>
+        <span class="hidden sm:inline"><%= day_name %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-7 gap-4 mb-12">
+    <% # Determine the days from the previous month to display in the grid %>
+    <% prev_month_days = (start_day_of_week - 1).downto(1).map { |n| previous_month.end_of_month - (n - 1) } %>
+    <% prev_month_days.each do |day| %>
+      <div class="flex flex-col justify-between bg-gray-100 p-2 rounded-lg shadow text-gray-500 min-h-[160px]">
+        <div class="text-right text-sm"><%= day.day %></div>
+        <div class="text-xs opacity-0">placeholder</div> <!-- Invisible placeholder to maintain height -->
+      </div>
+    <% end %>
+
+    <% # Current month's days %>
+    <% (start_of_month..end_of_month).each do |day| %>
+      <div class="<%= 'border-2 border-blue-500' if day == Date.today %> flex flex-col justify-between bg-white p-2 rounded-lg shadow relative min-h-[160px]">
+        <div class="text-right text-sm right-2 top-2"><%= day.day %></div>
+        <% day_events = @events.select { |e| e.start_time.to_date == day } %>
+        <% day_events.each do |event| %>
+          <div class="bg-blue-500 text-white text-sm px-2 py-1 mt-0.5 rounded flex justify-between items-center">
+            <span><%= event.title %></span>
+            <span class="text-gray-200 font-light text-sm"><%= event.start_time.strftime("%H:%M") %></span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% # Days from the next month %>
+    <% (1..(42 - prev_month_days.count - end_of_month.day)).each do |day| %>
+      <div class="flex flex-col justify-between bg-gray-100 p-2 rounded-lg shadow text-gray-500 min-h-[160px]">
+        <div class="text-right text-sm"><%= day %></div>
+        <div class="text-xs opacity-0">placeholder</div> <!-- Invisible placeholder to maintain height -->
+      </div>
+    <% end %>
+  </div>
+
+
+<% end %>

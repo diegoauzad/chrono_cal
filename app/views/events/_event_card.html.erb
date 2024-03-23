@@ -1,0 +1,29 @@
+<!-- app/views/events/_event_card.html.erb -->
+
+<div class="bg-white shadow-md rounded-lg overflow-hidden my-5">
+  <!-- Card Header -->
+  <div class="bg-blue-500 text-white text-lg px-6 py-4">
+    <%= event.title %>
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-6">
+    <div class="flex items-center mb-4">
+      <i class="far fa-calendar-alt mr-2"></i>
+      <p><%= event.start_time.strftime("%a, %b %d, %H:%M") %> - <%= event.end_time.strftime("%H:%M") %></p>
+    </div>
+
+    <!-- ... Other event details ... -->
+
+    <div class="flex items-center">
+      <i class="fas fa-redo mr-2"></i>
+      <!--      <p>Repeat <%#= event.recurrence %></p>-->
+    </div>
+
+    <!-- Action buttons if needed -->
+    <div class="flex justify-end mt-4">
+      <%= link_to 'Edit', edit_event_path(event), class: 'btn btn-warning btn-sm' %>
+      <%= link_to 'Delete', event_path(event), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger btn-sm' %>
+    </div>
+  </div>
+</div>

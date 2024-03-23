@@ -1,0 +1,84 @@
+<%#= form_with(model: event, class: "contents") do |form| %>
+<%# if event.errors.any? %>
+<!--    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">-->
+<!--      <h2><%#= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>-->
+
+<!--      <ul>-->
+<%# event.errors.each do |error| %>
+<!--          <li><%#= error.full_message %></li>-->
+<%# end %>
+<!--      </ul>-->
+<!--    </div>-->
+<%# end %>
+
+<!--  <div class="my-5">-->
+<%#= form.label :title %>
+<%#= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<!--  </div>-->
+
+<!--  <div class="my-5">-->
+<%#= form.label :start_time %>
+<%#= form.datetime_field :start_time, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<!--  </div>-->
+
+<!--  <div class="my-5">-->
+<%#= form.label :end_time %>
+<%#= form.datetime_field :end_time, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<!--  </div>-->
+
+<!--  <div class="my-5">-->
+<%#= form.label :location %>
+<%#= form.text_field :location, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<!--  </div>-->
+
+<!--  <div class="my-5">-->
+<%#= form.label :description %>
+<%#= form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<!--  </div>-->
+
+<!--  <div class="inline">-->
+<%#= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+<!--  </div>-->
+<%# end %>
+<%= form_with(model: event, class: "max-w-xl mx-auto my-8 p-6 bg-white shadow rounded") do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Please review the following:</strong>
+      <ul class="list-disc list-inside">
+        <% event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-4">
+    <%= form.label :title, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :title, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  </div>
+
+  <div class="flex gap-4 my-4">
+    <div class="w-1/2">
+      <%= form.label :start_time, class: "block text-gray-700 font-bold mb-2" %>
+      <%= form.datetime_field :start_time, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", step: 1800 %>
+    </div>
+    <div class="w-1/2">
+      <%= form.label :end_time, class: "block text-gray-700 font-bold mb-2" %>
+      <%= form.datetime_field :end_time, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", step: 1800 %>
+    </div>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :location, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :location, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  </div>
+
+  <div class="my-4">
+    <%= form.label :description, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_area :description, rows: 4, class: "block w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+  </div>
+
+  <div class="flex justify-end mt-6">
+    <%= form.submit "Add event", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+<% end %>
