@@ -10,28 +10,9 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body class="flex flex-col min-h-screen bg-gray-100">
-<header class="bg-blue-600 text-white">
-
-  <%= form_with url: "/set_timezone", id: "timezone_form", method: :post, data: { turbo_frame: "_top" } do |form| %>
-    <%= form.hidden_field :timezone, id: "user_timezone" %>
-    <%= form.submit "Set Timezone", class: "hidden" %>
-  <% end %>
-
-  <nav class="container mx-auto flex justify-between items-center py-4">
-    <div class="text-lg font-bold">
-      <%= link_to "CronoCal", root_path, class: "text-white hover:text-blue-300" %>
-    </div>
-    <div class="flex">
-      <%= turbo_frame_tag "timezone_change" do %>
-        <%= form_with url: "/set_timezone", method: :post do |form| %>
-          <%= form.select :timezone, ActiveSupport::TimeZone.all.map { |tz| [tz.to_s, tz.name] }, {}, { onchange: "this.form.requestSubmit();" } %>
-        <% end %>
-      <% end %>
-      <span class="badge">Timezone: <%= session[:timezone] || 'UTC' %></span>
-      <%= link_to "Create Event", new_event_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-    </div>
-  </nav>
+<body class="flex flex-col min-h-screen bg-gray-100" data-controller="time-zone">
+<header>
+  <%= render 'shared/menu/navbar' %>
 </header>
 
 <!-- Main Content -->
@@ -41,7 +22,7 @@
 
 <!-- Footer -->
 <footer class="bg-blue-600 text-white text-center p-4">
-  © <%= Time.zone.now.year %> Diego Auza Derpic. Crafted with care and 💜 for 37 Signals.
+  © <%= Time.zone.now.year %> Diego Auza Derpic. Crafted with care and 💜 for 37signals.
 </footer>
 </body>
 </html>

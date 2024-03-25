@@ -1,0 +1,9 @@
+<%= form_with url: "/set_time_zone", method: :post, class: "max-w-sm mx-auto", data: { turbo: false } do %>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="time_zone_selected_by_user" value="true">
+  <%= select_tag :time_zone,
+                 time_zone_options_for_select(current_time_zone_name, nil, ActiveSupport::TimeZone),
+                 onchange: "this.form.requestSubmit();",
+                 class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                 id: "time_zone" %>
+<% end %>
