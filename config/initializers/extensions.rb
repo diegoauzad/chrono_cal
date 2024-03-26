@@ -1,1 +1,0 @@
-require 'core_extensions/time_adjustment'
