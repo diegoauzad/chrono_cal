@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+  around_action :set_request_time_zone
+
   def set_time_zone
 
     selected_by_user_param = params.fetch(:time_zone_selected_by_user, false)
@@ -33,6 +35,12 @@ class ApplicationController < ActionController::Base
       true
     else
       false
+    end
+  end
+
+  def set_request_time_zone
+    Time.use_zone(session.fetch(:time_zone, 'UTC')) do
+      yield
     end
   end
 
